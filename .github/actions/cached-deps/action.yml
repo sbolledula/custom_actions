@@ -6,6 +6,10 @@ inputs:
     description: 'Enable SRI caching for npm (default: true)'
     required: false
     default: 'true'
+outputs:
+  cache-hit:
+    description: 'Whether the dependencies were found in cache'
+    value: ${{ steps.install}}
 runs:
   using: 'composite'
   steps:
@@ -18,5 +22,7 @@ runs:
       key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
   - name: Install dependencies
     if: steps.cache.outputs.cache-hit != 'true' || inputs.sricaching != 'true'
-    run: npm ci
+    run: |
+      npm ci
+      echo "Cache='${{ inputs.sricaching }}'" >> $GITHUB_OUTPUT
     shell: bash
