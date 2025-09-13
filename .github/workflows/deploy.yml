@@ -13,7 +13,9 @@ jobs:
         uses: ./.github/actions/cached-deps
         with:
           sricaching: 'false' 
-      - name: Lint code
+      - name: output something related to cache
+        run: echo "Cache hit ${{ steps.cache.outputs.cache-hit }}"
+      - name: Lint code 
         run: npm run lint
   test:
     runs-on: ubuntu-latest
