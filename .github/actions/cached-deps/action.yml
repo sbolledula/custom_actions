@@ -3,13 +3,14 @@ name: 'Get & Cache dependencies for Node.js'
 description: 'Checkout code, get & cache dependencies for Node.js projects'
 inputs:
   sricaching:
-    description: 'Enable SRI caching for npm (default: false)'
+    description: 'Enable SRI caching for npm (default: true)'
     required: false
     default: 'true'
 runs:
   using: 'composite'
   steps:
   - name: Cache dependencies
+    if: inputs.sricaching == 'true'
     id: cache
     uses: actions/cache@v3
     with:
